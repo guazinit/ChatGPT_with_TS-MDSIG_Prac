@@ -1,37 +1,26 @@
-import { readFileSync } from "fs";
-import { OpenAI } from 'openai';
-
-const rawData = readFileSync("./key.json").toString();
-
-const APIKEY = JSON.parse(rawData).key
-
+import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: APIKEY,
+  apiKey: 'INSERT OPENAI API KEY HERE',
 });
 
-const callOpenAI = async (prompt: string) => {
+async function getOpenAiResponse(prompt: string) {
   try {
-    const response = await openai.completions.create({
-      model: 'gpt-3.5-turbo', 
-      prompt: prompt,
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4',  // 可以選擇 gpt-3.5-turbo 或 gpt-4 喵
+      messages: [{ role: 'user', content: prompt }],
       max_tokens: 100,
     });
-    return response.choices[0].text;
-  } catch (error) {
-    console.error('Error calling OpenAI API:', error);
-    throw error;
-  }
-};
 
-(async () => {
-  try {
-    const result = await callOpenAI('Hello, world!');
-    console.log('OpenAI response:', result);
+    console.log(response.choices[0].message.content);
   } catch (error) {
     console.error('Error:', error);
   }
-})();
+}
+
+// 測試函數，這裡可以輸入你的問題喵
+getOpenAiResponse('告訴我一個笑話喵！');
+
 
 
 

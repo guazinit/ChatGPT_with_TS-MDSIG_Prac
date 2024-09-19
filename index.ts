@@ -1,7 +1,10 @@
 import OpenAI from 'openai';
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 const openai = new OpenAI({
-  apiKey: 'INSERT OPENAI API KEY HERE',
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 async function getOpenAiResponse(prompt: string) {

@@ -1,10 +1,16 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
+import readline from 'readline';
 
 dotenv.config()
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
 
 async function getOpenAiResponse(prompt: string) {
@@ -21,7 +27,10 @@ async function getOpenAiResponse(prompt: string) {
   }
 }
 
-getOpenAiResponse('INSERT YOUR QUESTION HERE');
+rl.question('請輸入您的問題：', (prompt) => {
+  getOpenAiResponse(prompt);
+  rl.close();
+});
 
 
 
